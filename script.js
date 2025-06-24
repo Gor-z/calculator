@@ -45,9 +45,17 @@ const clearDisplay = () => {
 digits.forEach((digit) => {
     digit.addEventListener('click', () => {
         if (mainOperator == '') {
-        a += digit.textContent
-        }else if(secundaryOperator == ''){
-        b += digit.textContent
+            if (digit.textContent == '.' && a.includes('.')) {
+                return
+            } else {
+                a += digit.textContent
+            }
+        } else if (secundaryOperator == '') {
+            if (digit.textContent == '.' && b.includes('.')) {
+                return
+            } else {
+                b += digit.textContent
+            }
         }
         updateDisplay()
     })
@@ -55,19 +63,19 @@ digits.forEach((digit) => {
 
 operators.forEach((operator) => {
     operator.addEventListener('click', () => {
-        if (a != '' && mainOperator == '') {
-            mainOperator = operator.textContent.trim()
+        if (a != '' && b == '') {
+            mainOperator = operator.textContent
             updateDisplay()
-        }else if (mainOperator != '' && b != '' && secundaryOperator == '') {
+        } else if (mainOperator != '' && b != '') {
             secundaryOperator = operator.textContent
             updateDisplay()
         }
     })
-    
+
 })
 
 equals.addEventListener('click', () => {
-    let result 
+    let result
     result = operate(Number(a), Number(b), mainOperator)
     a = result
     b = ''
