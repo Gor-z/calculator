@@ -9,6 +9,7 @@ let a = ''
 let b = ''
 let mainOperator = ''
 let secundaryOperator = ''
+let result = ''
 
 const add = (a, b) => a + b
 const subtract = (a, b) => a - b
@@ -31,7 +32,7 @@ const operate = (a, b, operator) => {
 }
 
 const updateDisplay = () => {
-    display.textContent = `${a} ${mainOperator} ${b} ${secundaryOperator}`
+    display.textContent = `${result} ${a} ${mainOperator} ${b} ${secundaryOperator}`
 }
 
 const clearDisplay = () => {
@@ -44,7 +45,11 @@ const clearDisplay = () => {
 
 digits.forEach((digit) => {
     digit.addEventListener('click', () => {
+
         if (mainOperator == '') {
+           if (result != '') {
+            result = ''            
+        }
             if (digit.textContent == '.' && a.includes('.')) {
                 return
             } else {
@@ -75,12 +80,12 @@ operators.forEach((operator) => {
 })
 
 equals.addEventListener('click', () => {
-    let result
     result = operate(Number(a), Number(b), mainOperator)
-    a = result
+    a = ''
     b = ''
     mainOperator = ''
     if (secundaryOperator != '') {
+        a = result
         mainOperator = secundaryOperator
     }
     secundaryOperator = ''
